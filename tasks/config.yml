@@ -1,0 +1,23 @@
+---
+
+- name: Disable 'default' site
+  command: a2dissite {{ apache_default_site }}
+  changed_when: False
+  when: apache_config_disable_default_sites
+
+- name: Disable 'default-ssl' site
+  command: a2dissite default-ssl
+  changed_when: False
+  when: apache_config_disable_default_sites
+
+- name: Configure ports
+  template: src="{{ ansible_distribution_release }}/ports.j2"
+            dest=/etc/apache2/ports.conf
+            owner=root group=root mode=0644
+  notify: Restart Apache
+
+- name: Configure security
+  template: src="{{ ansible_distribution_release }}/security.j2"
+            dest="{{ apache_conf_security_file }}"
+            owner=root group=root mode=0644
+  notify: Restart Apache

@@ -1,0 +1,31 @@
+# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default
+# This is also true if you have upgraded from before 2.2.9-3 (i.e. from
+# Debian etch). See /usr/share/doc/apache2.2-common/NEWS.Debian.gz and
+# README.Debian.gz
+
+{% for name in apache_config_namevirtualhost %}
+NameVirtualHost {{ name }}
+{% endfor %}
+{% for port in apache_config_http_ports %}
+Listen {{ port }}
+{% endfor %}
+
+<IfModule mod_ssl.c>
+    # If you add NameVirtualHost *:443 here, you will also have to change
+    # the VirtualHost statement in /etc/apache2/sites-available/default-ssl
+    # to <VirtualHost *:443>
+    # Server Name Indication for SSL named virtual hosts is currently not
+    # supported by MSIE on Windows XP.
+{% for port in apache_config_https_ports %}
+    Listen {{ port }}
+{% endfor %}
+</IfModule>
+
+<IfModule mod_gnutls.c>
+{% for port in apache_config_https_ports %}
+    Listen {{ port }}
+{% endfor %}
+</IfModule>
+

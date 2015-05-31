@@ -1,0 +1,11 @@
+---
+
+- include: install.yml
+  tags:
+    - apache
+    - apache_install
+
+- include: config.yml
+  tags:
+    - apache
+    - apache_config

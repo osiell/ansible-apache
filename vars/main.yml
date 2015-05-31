@@ -1,0 +1,9 @@
+---
+
+# 'default' for Debian < 8 and Ubuntu < 14.04 (Apache 2.2)
+# '000-default' for Debian >=8 and Ubuntu >= 14.04 (Apache >= 2.4)
+apache_default_site: "{{ ((ansible_distribution == 'Debian' and ansible_lsb.major_release|int < 8) or (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int < 14)) and 'default' or '000-default' }}"
+
+apache_conf_dir: "{{ ((ansible_distribution == 'Debian' and ansible_lsb.major_release|int < 8) or (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int < 14)) and '/etc/apache2/conf.d' or '/etc/apache2/conf-available' }}"
+
+apache_conf_security_file: "{{ apache_conf_dir }}/{{ ((ansible_distribution == 'Debian' and ansible_lsb.major_release|int < 8) or (ansible_distribution == 'Ubuntu' and ansible_lsb.major_release|int < 14)) and 'security' or 'security.conf' }}"

@@ -1,0 +1,14 @@
+---
+
+apache_package: apache2-mpm-worker
+
+# Configuration
+apache_config_disable_default_sites: False
+#   - Ports
+apache_config_namevirtualhost: ['*:80']
+apache_config_http_ports: [80]
+apache_config_https_ports: [443]
+#   - Security
+apache_config_server_tokens: OS     # Full | OS | Minimal | Minor | Major | Prod
+apache_config_server_signature: On  # On | Off | EMail
+apache_config_trace_enable: Off     # On | Off | extended
