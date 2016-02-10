@@ -6,7 +6,7 @@ This role only install Apache packages using the standard Debian/Ubuntu APT
 repositories, and configure some common parameters (listening ports, security
 options...) without altering the file layouts supplied by the distribution.
 
-Minimum Ansible Version: 1.4
+Minimum Ansible Version: 1.8
 
 ## Systems supported
 
