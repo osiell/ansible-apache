@@ -12,3 +12,5 @@ apache_config_https_ports: [443]
 apache_config_server_tokens: OS     # Full | OS | Minimal | Minor | Major | Prod
 apache_config_server_signature: On  # On | Off | EMail
 apache_config_trace_enable: Off     # On | Off | extended
+#   - Custom configuration files
+apache_config_custom_paths: []

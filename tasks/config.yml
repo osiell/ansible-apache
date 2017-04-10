@@ -1,5 +1,11 @@
 ---
 
+- name: Register Apache version
+  command: dpkg-query --showformat='${Version}' --show apache2
+  register: apache_version
+  changed_when: False
+  always_run: yes
+
 - name: Disable 'default' site
   command: a2dissite {{ apache_default_site }}
   changed_when: False
@@ -20,4 +26,18 @@
   template: src="{{ ansible_distribution_release }}/security.j2"
             dest="{{ apache_conf_security_file }}"
             owner=root group=root mode=0644
+  notify: Restart Apache
+
+- name: Copy custom configuration
+  copy: src="{{ item }}"
+        dest="{{ apache_conf_dir }}/{{ item | basename }}"
+        owner=root group=root mode=0644
+  with_items: "{{ apache_config_custom_paths }}"
+  register: apache_config_custom
+  notify: Restart Apache
+
+- name: Enable custom configuration (Apache >= 2.4)
+  command: "a2enconf {{ item | basename }}"
+  when: "{{ apache_version | version_compare('2.4', '>=') and apache_config_custom.changed }}"
+  with_items: "{{ apache_config_custom_paths }}"
   notify: Restart Apache
