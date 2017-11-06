@@ -1,6 +1,6 @@
 ---
 
-apache_package: apache2-mpm-worker
+apache_package: apache2
 
 # Configuration
 apache_config_disable_default_sites: False
