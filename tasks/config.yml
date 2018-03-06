@@ -38,6 +38,6 @@
 
 - name: Enable custom configuration (Apache >= 2.4)
   command: "a2enconf {{ item | basename }}"
-  when: "{{ apache_version | float | version_compare('2.4', '>=') and apache_config_custom.changed }}"
+  when: apache_version.stdout | version_compare('2.4', '>=') and apache_config_custom.changed
   with_items: "{{ apache_config_custom_paths }}"
   notify: Restart Apache
