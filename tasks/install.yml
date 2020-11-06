@@ -2,5 +2,5 @@
 
 - name: Install Apache
   apt:  pkg=apache2,{{ apache_package }},ssl-cert
-        state=installed
+        state=present
         update_cache=yes
