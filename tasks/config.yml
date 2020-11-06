@@ -4,7 +4,7 @@
   command: dpkg-query --showformat='${Version}' --show apache2
   register: apache_version
   changed_when: False
-  always_run: yes
+  check_mode: no
 
 - name: Disable 'default' site
   command: a2dissite {{ apache_default_site }}
